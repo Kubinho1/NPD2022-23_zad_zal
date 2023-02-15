@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
 from extra_functions import *
-import cProfile
+#import cProfile
 
 # Pobiera (używając argparse) z wiersza poleceń ścieżki do plików (w formacie csv)
 # z danymi o GDP, populacji i emisji.
@@ -100,4 +100,4 @@ def main():
     emission_change(start, end, df_co2).to_csv('emission_change_10_years.csv', index=False)
 
 main()    
-cProfile.run('main()', filename = "profile_result.txt")
+#cProfile.run('main()', filename = "profile_result.txt")
