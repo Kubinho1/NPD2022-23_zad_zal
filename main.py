@@ -47,12 +47,16 @@ def main():
             start = args.start
         else:
             start = max(minyears)
+    else:
+        start = max(minyears)
     if args.koniec:
         if args.koniec < min(maxyears):
             end = args.koniec
         else:
             end = min(maxyears)
-
+    else:
+        end = min(maxyears)
+        
     try:
         if end - start < 0:
             raise ValueError
@@ -99,5 +103,6 @@ def main():
 
     emission_change(start, end, df_co2).to_csv('emission_change_10_years.csv', index=False)
 
-main()    
+if __name__=="__main__":
+    main()    
 #cProfile.run('main()', filename = "profile_result.txt")
