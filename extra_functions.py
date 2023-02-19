@@ -1,4 +1,5 @@
-def get_cols_to_drop(df):
+import pandas as pd
+def get_cols_to_drop(df,start,end):
 
     a = list(df)[4:-1]
     a = [int(i) for i in a if int(i) < start or int(i) > end]
@@ -6,7 +7,7 @@ def get_cols_to_drop(df):
 
     return a
 
-def emissions(year1, year2):
+def emissions(year1, year2, df_co2):
     
     first = df_co2.loc[df_co2['Year'] == year1]
     first = first.drop(first.columns[[3, 4, 5, 6, 7, 9]], axis=1)
@@ -22,7 +23,7 @@ def emissions(year1, year2):
         
     return first
 
-def merge_gdp_pop(year1, year2):
+def merge_gdp_pop(year1, year2, df_gdp, df_pop):
 
     year = []
     name = []
