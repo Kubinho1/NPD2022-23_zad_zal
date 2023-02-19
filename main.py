@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
 from extra_functions import *
-#import cProfile
+import cProfile
 
 # Pobiera (używając argparse) z wiersza poleceń ścieżki do plików (w formacie csv)
 # z danymi o GDP, populacji i emisji.
@@ -56,7 +56,8 @@ def main():
             end = min(maxyears)
     else:
         end = min(maxyears)
-        
+    
+  
     try:
         if end - start < 0:
             raise ValueError
@@ -76,8 +77,8 @@ def main():
     df_co2=df_co2.loc[df_co2['Year']  >= start]
     df_co2=df_co2.loc[df_co2['Year']  <= end]
 
-    df_gdp.drop(get_cols_to_drop(df_gdp), axis = 1, inplace=True)
-    df_pop.drop(get_cols_to_drop(df_pop), axis = 1, inplace=True)
+    df_gdp.drop(get_cols_to_drop(df_gdp,start,end), axis = 1, inplace=True)
+    df_pop.drop(get_cols_to_drop(df_pop,start,end), axis = 1, inplace=True)
 
     ##################################################################
 
@@ -86,10 +87,10 @@ def main():
     # tabelkę pięcioma krajami o największej emisji na osobę (z podaną nazwą
     # kraju, emisją na osobę i całkowitą emisją
 
-    emissions(start,end).to_csv('most_emissions.csv', index=False)
+    emissions(start,end, df_co2).to_csv('most_emissions.csv', index=False)
 
     # Scala dane po krajach i latach.
-    merged = merge_gdp_pop(start,end)
+    merged = merge_gdp_pop(start,end, df_gdp, df_pop)
 
     # Które kraje w poszczególnych latach z danymi mają największy przychód
     # mieszkańca. To znaczy generuje posortowaną po latach tabelkę pięcioma
@@ -105,4 +106,4 @@ def main():
 
 if __name__=="__main__":
     main()    
-#cProfile.run('main()', filename = "profile_result.txt")
+#cProfile.run('main()', filename = "profiler_results")
